@@ -1,19 +1,19 @@
 Name:           lttng-tools
 Version:        2.0.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
 Summary:        LTTng control and utility programs
 Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
-Source1:        lttng-sessiond.service
+Source1:        lttng-sessiond.init
 
-BuildRequires:  libuuid-devel popt-devel lttng-ust-devel libtool systemd-units
+BuildRequires:  libuuid-devel popt-devel lttng-ust-devel libtool
 BuildRequires:  userspace-rcu-devel >= 0.6.6
-Requires(pre):  shadow-utils
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
+Requires(post):         chkconfig /sbin/service
+Requires(pre):          shadow-utils
+Requires(preun):        chkconfig shadow-utils /sbin/service
+Requires(postun):       chkconfig /sbin/service
 
 %description
 This package provides the unified interface to control both the LTTng kernel
@@ -47,7 +47,7 @@ make %{?_smp_mflags} V=1
 %install
 make DESTDIR=%{buildroot} install
 rm -vf %{buildroot}%{_libdir}/*.la
-install -D -m644 %{SOURCE1} %{buildroot}%{_unitdir}/lttng-sessiond.service
+install -Dpm 755 %{SOURCE1} $RPM_BUILD_ROOT%{_initrddir}/lttng-sessiond
 # Install upstream bash auto completion for lttng
 install -D -m644 extras/lttng-bash_completion %{buildroot}%{_sysconfdir}/bash_completion.d/lttng
 
@@ -60,22 +60,21 @@ exit 0
 
 if [ $1 -eq 1 ] ; then 
     # Initial installation
-    /bin/systemctl enable lttng-sessiond.service >/dev/null 2>&1 || :
+    /sbin/chkconfig --add lttng-sessiond
 fi
 
 %preun
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
-    /bin/systemctl --no-reload disable lttng-sessiond.service > /dev/null 2>&1 || :
-    /bin/systemctl stop lttng-sessiond.service > /dev/null 2>&1 || :
+    /sbin/service lttng-sessiond stop > /dev/null 2>&1
+    /sbin/chkconfig --del lttng-sessiond
 fi
 
 %postun
 /sbin/ldconfig
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
-    /bin/systemctl try-restart lttng-sessiond.service >/dev/null 2>&1 || :
+    /sbin/service lttng-sessiond condrestart > /dev/null 2>&1
 fi
 
 
@@ -93,7 +92,7 @@ fi
 %{_docdir}/%{name}/LICENSE
 %{_docdir}/%{name}/quickstart.txt
 %doc README
-%{_unitdir}/lttng-sessiond.service
+%{_initrddir}/lttng-sessiond
 %{_sysconfdir}/bash_completion.d/
 
 
@@ -102,6 +101,9 @@ fi
 %{_libdir}/*.so
 
 %changelog
+* Tue Oct 23 2012 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.0.4-2
+- Change systemd to init script for EPEL
+
 * Tue Oct 23 2012 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.0.4-1
 - New upstream version
 
