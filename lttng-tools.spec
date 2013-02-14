@@ -1,6 +1,6 @@
 Name:           lttng-tools
 Version:        2.0.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -102,6 +102,9 @@ fi
 %{_libdir}/*.so
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Tue Oct 23 2012 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.0.4-1
 - New upstream version
 
