@@ -1,6 +1,6 @@
 Name:           lttng-tools
-Version:        2.0.4
-Release:        2%{?dist}
+Version:        2.1.1
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -8,7 +8,8 @@ Summary:        LTTng control and utility programs
 Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.service
 
-BuildRequires:  libuuid-devel popt-devel lttng-ust-devel libtool systemd-units
+BuildRequires:  libuuid-devel popt-devel libtool systemd-units
+BuildRequires:  lttng-ust-devel >= 2.1
 BuildRequires:  userspace-rcu-devel >= 0.6.6
 Requires(pre):  shadow-utils
 Requires(post): systemd-units
@@ -85,13 +86,16 @@ fi
 %{_bindir}/lttng
 %{_libdir}/lttng/libexec/lttng-consumerd
 %{_bindir}/lttng-sessiond
+%{_bindir}/lttng-relayd
 %{_libdir}/*.so.*
 %{_mandir}/man1/lttng.1.gz
+%{_mandir}/man3/lttng-health-check.3.gz
 %{_mandir}/man8/lttng-sessiond.8.gz
+%{_mandir}/man8/lttng-relayd.8.gz
 %dir %{_docdir}/%{name}
 %{_docdir}/%{name}/ChangeLog
 %{_docdir}/%{name}/LICENSE
-%{_docdir}/%{name}/quickstart.txt
+%{_docdir}/%{name}/*.txt
 %doc README
 %{_unitdir}/lttng-sessiond.service
 %{_sysconfdir}/bash_completion.d/
@@ -102,6 +106,9 @@ fi
 %{_libdir}/*.so
 
 %changelog
+* Tue Feb 26 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-1
+- New upstream version
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
