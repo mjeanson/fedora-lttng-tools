@@ -1,6 +1,7 @@
+
 Name:           lttng-tools
 Version:        2.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -15,6 +16,8 @@ Requires(pre):  shadow-utils
 Requires(post): systemd-units
 Requires(preun): systemd-units
 Requires(postun): systemd-units
+
+%global _hardened_build 1
 
 %description
 This package provides the unified interface to control both the LTTng kernel
@@ -106,6 +109,9 @@ fi
 %{_libdir}/*.so
 
 %changelog
+* Fri May 17 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-2
+- Add hardening option (#955452)
+
 * Tue Feb 26 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-1
 - New upstream version
 
