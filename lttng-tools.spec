@@ -13,9 +13,9 @@ BuildRequires:  libuuid-devel popt-devel libtool systemd-units
 BuildRequires:  lttng-ust-devel >= 2.1
 BuildRequires:  userspace-rcu-devel >= 0.6.6
 Requires(pre):  shadow-utils
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
 
 %global _hardened_build 1
 
@@ -61,27 +61,14 @@ exit 0
 
 %post
 /sbin/ldconfig
-
-if [ $1 -eq 1 ] ; then 
-    # Initial installation
-    /bin/systemctl enable lttng-sessiond.service >/dev/null 2>&1 || :
-fi
+%systemd_post lttng-sessiond.service
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable lttng-sessiond.service > /dev/null 2>&1 || :
-    /bin/systemctl stop lttng-sessiond.service > /dev/null 2>&1 || :
-fi
+%systemd_preun lttng-sessiond.service
 
 %postun
 /sbin/ldconfig
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart lttng-sessiond.service >/dev/null 2>&1 || :
-fi
-
+%systemd_postun_with_restart lttng-sessiond.service 
 
 %files
 %dir %{_libdir}/lttng
@@ -111,6 +98,7 @@ fi
 %changelog
 * Fri May 17 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-2
 - Add hardening option (#955452)
+- Use new systemd-rpm macros (#850195)
 
 * Tue Feb 26 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-1
 - New upstream version
