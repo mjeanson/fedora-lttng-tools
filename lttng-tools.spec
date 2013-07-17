@@ -94,6 +94,7 @@ exit 0
 %files -n %{name}-devel
 %{_prefix}/include/lttng/*
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
 * Tue Jul 16 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.2.1-1
