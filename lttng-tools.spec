@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
-Version:        2.1.1
-Release:        2%{?dist}
+Version:        2.2.1
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -10,8 +10,8 @@ Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.service
 
 BuildRequires:  libuuid-devel popt-devel libtool systemd-units
-BuildRequires:  lttng-ust-devel >= 2.1
-BuildRequires:  userspace-rcu-devel >= 0.6.6
+BuildRequires:  lttng-ust-devel >= 2.2
+BuildRequires:  userspace-rcu-devel >= 0.7.2
 Requires(pre):  shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
@@ -96,6 +96,9 @@ exit 0
 %{_libdir}/*.so
 
 %changelog
+* Tue Jul 16 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.2.1-1
+- New upstream version
+
 * Fri May 17 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-2
 - Add hardening option (#955452)
 - Use new systemd-rpm macros (#850195)
