@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
-Version:        2.1.1
-Release:        2%{?dist}
+Version:        2.1.2
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -96,6 +96,9 @@ exit 0
 %{_libdir}/*.so
 
 %changelog
+* Mon Jul 22 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.2-1
+- New upstream bugfix release
+
 * Fri May 17 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.1-2
 - Add hardening option (#955452)
 - Use new systemd-rpm macros (#850195)
