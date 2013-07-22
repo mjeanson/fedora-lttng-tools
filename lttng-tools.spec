@@ -1,6 +1,6 @@
 
 Name:           lttng-tools
-Version:        2.2.1
+Version:        2.2.2
 Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
@@ -97,6 +97,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Mon Jul 22 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.2.2-1
+- New upstream bugfix version
+
 * Tue Jul 16 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.2.1-1
 - New upstream version
 
