@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
 Version:        2.2.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -97,6 +97,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Tue Jul 23 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.2.3-1
 - New upstream bugfix version
 
