@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
-Version:        2.2.3
-Release:        2%{?dist}
+Version:        2.3.0
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -10,7 +10,7 @@ Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.service
 
 BuildRequires:  libuuid-devel popt-devel libtool systemd-units
-BuildRequires:  lttng-ust-devel >= 2.2
+BuildRequires:  lttng-ust-devel >= 2.3
 BuildRequires:  userspace-rcu-devel >= 0.7.2
 Requires(pre):  shadow-utils
 Requires(post): systemd
@@ -97,6 +97,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Fri Sep 20 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.3.0-1
+- New upstream release
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
