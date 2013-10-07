@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
-Version:        2.1.2
-Release:        1%{?dist}
+Version:        2.3.0
+Release:        2%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -10,14 +10,17 @@ Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.service
 
 BuildRequires:  libuuid-devel popt-devel libtool systemd-units
-BuildRequires:  lttng-ust-devel >= 2.1
-BuildRequires:  userspace-rcu-devel >= 0.6.6
+BuildRequires:  lttng-ust-devel >= 2.3
+BuildRequires:  userspace-rcu-devel >= 0.7.2
 Requires(pre):  shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
 
+#GCC crash when building this package on arm with hardening activated (See bug 987192).
+%ifnarch %{arm}
 %global _hardened_build 1
+%endif
 
 %description
 This package provides the unified interface to control both the LTTng kernel
@@ -94,8 +97,15 @@ exit 0
 %files -n %{name}-devel
 %{_prefix}/include/lttng/*
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Tue Sep 24 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.3.0-2
+- Disable hardening flags on arm, since it does not build with them
+
+* Fri Sep 20 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.3.0-1
+- New upstream release
+
 * Mon Jul 22 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.1.2-1
 - New upstream bugfix release
 
