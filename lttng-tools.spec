@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
 Version:        2.3.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -39,6 +39,8 @@ implement trace control in external applications
 %setup -q
 
 %build
+#automake version change
+autoreconf -vfi
 #Reinitialize libtool with the fedora version to remove Rpath
 libtoolize -cvfi
 
@@ -100,6 +102,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Sat Feb 22 2014 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.3.0-3
+- Rebuilt for URCU soname bump
+
 * Tue Sep 24 2013 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.3.0-2
 - Disable hardening flags on arm, since it does not build with them
 
