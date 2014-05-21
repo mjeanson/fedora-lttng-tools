@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
-Version:        2.3.0
-Release:        3%{?dist}
+Version:        2.4.1
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -44,7 +44,7 @@ autoreconf -vfi
 #Reinitialize libtool with the fedora version to remove Rpath
 libtoolize -cvfi
 
-%configure --docdir=%{_docdir}/%{name} --disable-static
+%configure --disable-static
 
 make %{?_smp_mflags} V=1
 
@@ -84,7 +84,6 @@ exit 0
 %{_bindir}/lttng-relayd
 %{_libdir}/*.so.*
 %{_mandir}/man1/lttng.1.gz
-%{_mandir}/man3/lttng-health-check.3.gz
 %{_mandir}/man8/lttng-sessiond.8.gz
 %{_mandir}/man8/lttng-relayd.8.gz
 %dir %{_docdir}/%{name}
@@ -102,6 +101,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Tue May 20 2014 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.4.1-1
+- New upstream release
+
 * Sat Feb 22 2014 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.3.0-3
 - Rebuilt for URCU soname bump
 
