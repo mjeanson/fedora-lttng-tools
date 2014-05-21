@@ -1,6 +1,6 @@
 Name:           lttng-tools
-Version:        2.0.4
-Release:        2%{?dist}
+Version:        2.4.1
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -9,7 +9,7 @@ Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.init
 
 BuildRequires:  libuuid-devel popt-devel lttng-ust-devel libtool
-BuildRequires:  userspace-rcu-devel >= 0.6.6
+BuildRequires:  userspace-rcu-devel >= 0.7.2
 Requires(post):         chkconfig /sbin/service
 Requires(pre):          shadow-utils
 Requires(preun):        chkconfig shadow-utils /sbin/service
@@ -33,7 +33,8 @@ implement trace control in external applications
 
 %build
 #Reinitialize libtool with the fedora version to remove Rpath
-libtoolize -cvfi
+#libtoolize -cvfi
+autoreconf -vfi
 
 %configure --docdir=%{_docdir}/%{name} --disable-static
 
@@ -84,13 +85,15 @@ fi
 %{_bindir}/lttng
 %{_libdir}/lttng/libexec/lttng-consumerd
 %{_bindir}/lttng-sessiond
+%{_bindir}/lttng-relayd
 %{_libdir}/*.so.*
 %{_mandir}/man1/lttng.1.gz
 %{_mandir}/man8/lttng-sessiond.8.gz
+%{_mandir}/man8/lttng-relayd.8.gz
 %dir %{_docdir}/%{name}
 %{_docdir}/%{name}/ChangeLog
 %{_docdir}/%{name}/LICENSE
-%{_docdir}/%{name}/quickstart.txt
+%{_docdir}/%{name}/*.txt
 %doc README
 %{_initrddir}/lttng-sessiond
 %{_sysconfdir}/bash_completion.d/
@@ -99,8 +102,12 @@ fi
 %files -n %{name}-devel
 %{_prefix}/include/lttng/*
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Tue May 20 2014 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.4.1-1
+- New upstream release
+
 * Tue Oct 23 2012 Yannick Brosseau <yannick.brosseau@gmail.com> - 2.0.4-2
 - Change systemd to init script for EPEL
 
