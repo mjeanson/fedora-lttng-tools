@@ -1,7 +1,7 @@
 
 Name:           lttng-tools
 Version:        2.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org/lttng2.0
 Group:          Development/Tools
@@ -43,6 +43,11 @@ implement trace control in external applications
 autoreconf -vfi
 #Reinitialize libtool with the fedora version to remove Rpath
 libtoolize -cvfi
+
+%ifarch s390 s390x
+# workaround rhbz#837572 (ICE in gcc)
+%global optflags %(echo %{optflags} | sed 's/-O2/-O1/')
+%endif
 
 %configure --disable-static
 
@@ -101,6 +106,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Tue Oct 21 2014 Dan Horák <dan[at]danny.cz> - 2.4.1-4
+- add build workaround for s390(x)
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
