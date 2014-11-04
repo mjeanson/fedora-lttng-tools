@@ -1,17 +1,17 @@
-
 Name:           lttng-tools
-Version:        2.4.1
-Release:        4%{?dist}
+Version:        2.5.1
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
-URL:            http://lttng.org/lttng2.0
+URL:            http://lttng.org
 Group:          Development/Tools
 Summary:        LTTng control and utility programs
 Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.service
 
 BuildRequires:  libuuid-devel popt-devel libtool systemd-units
-BuildRequires:  lttng-ust-devel >= 2.3
-BuildRequires:  userspace-rcu-devel >= 0.7.2
+BuildRequires:  lttng-ust-devel >= 2.5
+BuildRequires:  userspace-rcu-devel >= 0.8.0
+BuildRequires:  libxml2-devel >= 2.7.6
 Requires(pre):  shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
@@ -106,6 +106,11 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Mon Nov 03 2014 Suchakra Sharma <suchakra@fedoraproject.org> - 2.5.1-1
+- New upstream release
+- Update URL
+- Update some BuildRequires
+
 * Tue Oct 21 2014 Dan Horák <dan[at]danny.cz> - 2.4.1-4
 - add build workaround for s390(x)
 
