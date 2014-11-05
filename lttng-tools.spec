@@ -98,7 +98,7 @@ exit 0
 %doc README
 %{_unitdir}/lttng-sessiond.service
 %{_sysconfdir}/bash_completion.d/
-
+%{_datadir}/xml/lttng/session.xsd
 
 %files -n %{name}-devel
 %{_prefix}/include/lttng/*
@@ -110,6 +110,7 @@ exit 0
 - New upstream release
 - Update URL
 - Update some BuildRequires
+- Add session.xsd file to package
 
 * Tue Oct 21 2014 Dan Horák <dan[at]danny.cz> - 2.4.1-4
 - add build workaround for s390(x)
