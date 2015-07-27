@@ -1,17 +1,20 @@
 Name:           lttng-tools
-Version:        2.5.1
-Release:        2%{?dist}
+Version:        2.6.0
+Release:        1%{?dist}
 License:        GPLv2 and LGPLv2
 URL:            http://lttng.org
 Group:          Development/Tools
 Summary:        LTTng control and utility programs
 Source0:        http://lttng.org/files/lttng-tools/%{name}-%{version}.tar.bz2
 Source1:        lttng-sessiond.service
+Patch0:         mark-mi-and-config-string-declarations-as-extern.patch
 
 BuildRequires:  libuuid-devel popt-devel libtool systemd-units
-BuildRequires:  lttng-ust-devel >= 2.5
+BuildRequires:  lttng-ust-devel >= 2.6
 BuildRequires:  userspace-rcu-devel >= 0.8.0
 BuildRequires:  libxml2-devel >= 2.7.6
+# For check
+#BuildRequires:  perl-Test-Harness procps-ng
 Requires(pre):  shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
@@ -37,12 +40,12 @@ implement trace control in external applications
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-#automake version change
-autoreconf -vfi
 #Reinitialize libtool with the fedora version to remove Rpath
 libtoolize -cvfi
+autoreconf -vfi
 
 %ifarch s390 s390x
 # workaround rhbz#837572 (ICE in gcc)
@@ -95,7 +98,7 @@ exit 0
 %{_docdir}/%{name}/ChangeLog
 %{_docdir}/%{name}/LICENSE
 %{_docdir}/%{name}/*.txt
-%doc README
+%doc README.md
 %{_unitdir}/lttng-sessiond.service
 %{_sysconfdir}/bash_completion.d/
 %{_datadir}/xml/lttng/session.xsd
@@ -106,6 +109,9 @@ exit 0
 %{_libdir}/pkgconfig/lttng-ctl.pc
 
 %changelog
+* Thu Jul 23 2015 Michael Jeanson <mjeanson@gmail.com> - 2.6.0-1
+- New upstream release
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.5.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
